@@ -87,10 +87,6 @@ contract WrappedVEYFI {
         IERC20(YFI).safeApprove(VEYFI, type(uint).max);
     }
     
-    function getName() external pure returns (string memory) {
-        return "VEYFIWrapper";
-    }
-    
     function setController(address _controller) external {
         require(msg.sender == owner, "!owner");
         controller = _controller;
