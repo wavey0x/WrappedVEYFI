@@ -70,7 +70,7 @@ interface VoteEscrow {
     function withdraw() external;
 }
 
-contract CurveYCRVVoter {
+contract WrappedVEYFI {
     using SafeERC20 for IERC20;
     using Address for address;
     
