@@ -110,7 +110,7 @@ contract WrappedVEYFI {
     function withdraw(bool acceptPenalty) external {
         require(msg.sender == controller || msg.sender == owner, "!authorized");
         uint lockEnd = VoteEscrow(VEYFI).locked(address(this)).end;
-        if (lockEnd > block.timestamp && acceptPenalty || lockEnd < block.timestamp){
+        if ((lockEnd > block.timestamp && acceptPenalty) || lockEnd < block.timestamp){
             VoteEscrow(VEYFI).withdraw();
         }
     }
