@@ -65,9 +65,14 @@ library SafeERC20 {
 
 
 interface VoteEscrow {
+    struct LockedBalance {
+        uint amount;
+        uint end;
+    }
     function modify_lock(uint amount, uint unlock_time) external;
     function increase_amount(uint) external;
     function withdraw() external;
+    function locked(address user) external view returns (LockedBalance memory);
 }
 
 contract WrappedVEYFI {
@@ -102,9 +107,12 @@ contract WrappedVEYFI {
         VoteEscrow(VEYFI).increase_amount(_value);
     }
     
-    function release() external {
+    function withdraw(bool acceptPenalty) external {
         require(msg.sender == controller || msg.sender == owner, "!authorized");
-        VoteEscrow(VEYFI).withdraw();
+        uint lockEnd = VoteEscrow(VEYFI).locked(address(this)).end;
+        if (lockEnd > block.timestamp && acceptPenalty || lockEnd < block.timestamp){
+            VoteEscrow(VEYFI).withdraw();
+        }
     }
     
     function balanceOfWant() public view returns (uint) {
