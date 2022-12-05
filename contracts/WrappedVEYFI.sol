@@ -68,11 +68,10 @@ contract WrappedVEYFI {
     
     /// @notice transfer ownership of veYFI position
     /// @param _owner new owner
-    /// @param _resetCondition specify whether or not to reset an existing conditionContract;
+    /// @param _resetCondition specify whether or not to reset an existing conditionContract
     function transferOwnership(address _owner, bool _resetCondition) external {
         require(msg.sender == owner || msg.sender == conditionContract, "!owner");
         owner = _owner;
-        /// @dev reset this after each transfer so that condition becomes unavailable
         if (_resetCondition){
             conditionContract = address(0);
         }
