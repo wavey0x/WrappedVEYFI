@@ -65,12 +65,12 @@ contract WrappedVEYFI {
     /// @notice transfer ownership of veYFI position
     /// @param _owner new owner
     /// @param _newConditionContract specify a new condition contract. 0x0 is a safe default.
-    /// @param _newOperator specify a new operator. 0x0 is a safe default.
-    function transferOwnership(address _owner, address _newConditionContract, address _newOperator) external {
+    /// @param _neController specify a new operator. 0x0 is a safe default.
+    function transferOwnership(address _owner, address _newConditionContract, address _neController) external {
         require(msg.sender == owner || msg.sender == conditionContract, "!owner");
         owner = _owner;
         conditionContract = _newConditionContract;
-        operator = _newOperator;
+        controller = _neController;
     }
 
     function setTransferCondition(address _conditionContract) external {
